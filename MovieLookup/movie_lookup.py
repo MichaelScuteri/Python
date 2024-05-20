@@ -31,7 +31,9 @@ def get_movie_info(full_link):
     movie_info['Rating'] = soup.select_one("div.jw-scoring-listing__rating span").text.strip()
     synopsis_a = soup.select_one("article.article-block p")
     synopsis_b = soup.find("p", class_="text-wrap-pre-line")
+    streaming = soup.find("div", class_="buybox-row stream")
     
+
     if synopsis_a:
         movie_info['Synopsis'] = synopsis_a.text.strip()
     elif synopsis_b:
@@ -39,7 +41,17 @@ def get_movie_info(full_link):
     else:
         movie_info['Synopsis'] = "Synopsis not available"
 
+
+    if streaming:
+        img_tags = streaming.find_all("img", class_="offer__icon")
+        services = [img['alt'] for img in img_tags if 'alt' in img.attrs]
+        movie_info['Stream'] = ', '.join(services) if services else "Not available to stream"
+    else:
+        movie_info['Stream'] = "Not currently available to stream"
+
+
     return movie_info
+
 
 if __name__ == "__main__":
     print("-"*18)
@@ -61,3 +73,4 @@ if __name__ == "__main__":
             print(f"Director: {movie_info['Director']}")
             print(f"Rating: {movie_info['Rating']}")
             print(f"\nSynopsis:\n{movie_info['Synopsis']}\n")
+            print(f"Available on:\n{movie_info['Stream']}\n")
