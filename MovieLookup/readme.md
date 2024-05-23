@@ -9,4 +9,4 @@ Future versions of the program will allow for more sophisticated information and
 - **Available Streaming Options:** All available options for streaming the movie will be output (for Australia). 
 
 ## Screenshots
-![](Screenshots\movie_lookup.jpg)
+![](screenshots/movie_lookup.jpg)
