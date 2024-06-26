@@ -17,13 +17,11 @@ def generate_pass(account):
     print(f'\nPassword generated for {account}:')
     print(f'{password}\n')
 
-def main():
+
+if __name__ == "__main__":
     print('-------- Password Generator V1.0 ---------')
     while True:
         account = input('Enter username to generate password (type "exit" to quit): ')
         if account.lower() == 'exit':
             break
         generate_pass(account)
-
-if __name__ == "__main__":
-    main()
