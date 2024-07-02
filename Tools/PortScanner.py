@@ -19,16 +19,16 @@ common_ports = {
 }
 
 if len(sys.argv) < 2:
-    print(f"Usage: PortScanner.py <host/IP>")
+    print(f"Usage: PortScanner.py <host/IP> <-quick or -full>")
     sys.exit(1)
 
 host = sys.argv[1]
 scan_type = sys.argv[2]
 
 if sys.argv[2] == "-quick":
-    port_limit = 1000
+    port_limit = 1001
 elif sys.argv[2] == "-full":
-    port_limit = 65535
+    port_limit = 65536
 
 try:
     hostIP = socket.gethostbyname(host)
