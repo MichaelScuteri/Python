@@ -1,3 +1,8 @@
 RandomCode/
 SEC573/
 SQL/
+Scrabble/
+PassManager/
+webp-converter/libwebp/*
+!webp-converter/libwebp/
+test.py
