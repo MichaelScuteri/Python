@@ -7,7 +7,7 @@ The script utilises Google's libwebp package to convert the image files and allo
 The script only has one dependency, which is the libwebp package. You can download it [here](https://developers.google.com/speed/webp/docs/precompiled).
 
 ### Setting Up libwebp
-Once you have downloaded the libwebp package either simply place it into the libwebp placeholder folder downloaded with this project or set it to your environment path.
+Once you have downloaded the libwebp package either simply place it into the libwebp placeholder folder downloaded with this project (recommended) or set it to your environment path.
 
 Setting it to your environment PATH for current session:
 
@@ -19,9 +19,15 @@ Set it permanently to your environment:
 
 ### Converting Images
 
-Place all images you want to convert into the empty /convert folder and run the python script.
+1. Place all images you want to convert into the empty /convert folder and run the python script.
 
-The script will convert all your images to webp format and place them in a new directory called webp-files.
+2. The script will convert all your images to webp format at the default qaulity setting of 75%. 
+
+3. Converted images will be placed in a folder called webp-files in the main directory
+
+To **set your own qaulity setting**, run the script at the command line with the first argument after the .py file being the qaulity setting:
+    
+    webp-converter.py 50
 
 # Future Features
 
