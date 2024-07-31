@@ -1,12 +1,11 @@
 import os
-import sys
 import subprocess
-import shutil
 
 out_dir = "webp-files"
-input_dir = "./convert"
+input_dir = ".\convert"
 extensions = (".png", ".jpg", ".jpeg", ".tiff")
 images = []
+failed_images = []
 script_dir = os.path.dirname(os.path.realpath(__file__))
 libwebp = os.path.join(script_dir, "libwebp", "libwebp-1.4.0", "bin", "cwebp.exe")
 
@@ -19,11 +18,20 @@ def find_image_dir():
 
 def convert(images):
     for image in images:
-        print(f"Conerting {image}...")
+        print(f"Converting {image}...")
         input_file = os.path.join(input_dir, image)
         output_file = os.path.join(out_dir, os.path.splitext(image)[0] + ".webp")
-        subprocess.run([libwebp, "-quiet", "-q", "80", input_file, "-o", output_file])
-
+        try:
+            result = subprocess.call(
+                [libwebp, "-quiet", "-q", "80", input_file, "-o", output_file],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+            if result != 0:
+                failed_images.append(image)
+        except Exception:
+            continue
+        
 def main():
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
@@ -32,7 +40,16 @@ def main():
         find_image_dir()
 
     convert(images)
-    print(f"Converted {len(images)} image(s) to WebP format.")
+
+    converted = os.listdir(out_dir)
+    failed = len(failed_images)
+    print(f"Converted {len(converted)} image(s) to WebP format.")
+
+    if failed > 0:
+        print(f"Failed to convert {failed} image(s):")
+        for fail in failed_images:
+            print(f"- {fail}")
+    exit()
     
 main()
 
