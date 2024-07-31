@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 out_dir = "webp-files"
 input_dir = ".\convert"
@@ -16,30 +17,36 @@ def find_image_dir():
                 images.append(file)
     return images
 
-def convert(images):
+def convert(images, qaulity):
     for image in images:
         print(f"Converting {image}...")
         input_file = os.path.join(input_dir, image)
         output_file = os.path.join(out_dir, os.path.splitext(image)[0] + ".webp")
         try:
             result = subprocess.call(
-                [libwebp, "-quiet", "-q", "80", input_file, "-o", output_file],
+                [libwebp, "-quiet", "-q", qaulity, input_file, "-o", output_file],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL
             )
             if result != 0:
                 failed_images.append(image)
-        except Exception:
-            continue
+        except Exception as e:
+            print(e)
         
 def main():
+    qaulity = "75"
+
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
         find_image_dir()
     else:
         find_image_dir()
 
-    convert(images)
+    if len(sys.argv) > 1:
+        qaulity = sys.argv[1]
+        convert(images, qaulity)
+    else:
+        convert(images, qaulity)
 
     converted = os.listdir(out_dir)
     failed = len(failed_images)
@@ -52,5 +59,3 @@ def main():
     exit()
     
 main()
-
-
