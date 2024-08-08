@@ -38,16 +38,16 @@ except socket.gaierror:
     print(f"Hostname could not be resolved: {host}")
     sys.exit(1)
 
-socket.setdefaulttimeout(0.1)
+socket.setdefaulttimeout(0.5)
 
-print("-" * 60)
+print("-" * 36)
 print(f"Scanning host at {hostIP}")
-print("-" * 60)
+print("-" * 36)
 
 t1 = datetime.now()
 
 def scan_port(port):
-    sys.stdout.write(f"\rScanning port {port}/{port_limit}")
+    sys.stdout.write(f"\rScanning port {port}/{port_limit - 1}")
     sys.stdout.flush()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = s.connect_ex((hostIP, port))
